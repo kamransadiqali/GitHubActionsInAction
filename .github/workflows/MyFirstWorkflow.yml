@@ -26,14 +26,28 @@ on:
        required: true
 
 jobs:
+    generate-a-secret-output:
+       runs-on: ubuntu-latest
+       steps:
+         - id: sets-a-secret
+           name: Generate, mask, and output a secret
+           run: |
+             the_secret=$((RANDOM))
+             echo "::add-mask::$the_secret"
+             echo "secret-number=$the_secret" >> "$GITHUB_OUTPUT"
+         - name: Use that secret output (protected by a mask)
+           run: |
+             echo "the secret number is ${{ steps.sets-a-secret.outputs.secret-number }}"
+
+#jobs:
     MyFirstJob:
       runs-on: ubuntu-latest
       steps:
         - run: echo "🐤 Hello World"
-        - name: My First Action with input
-          uses: actions/HelloWorld@1
-          with:
-            WhoToGreat: kamran
+        #- name: My First Action with input
+        #  uses: actions/HelloWorld@1
+        #  with:
+        #    WhoToGreat: kamran
         - name: Checkout
           uses: actions/checkout@v4.2.2
         - name: List the files in repo
