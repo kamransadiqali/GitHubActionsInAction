@@ -30,6 +30,10 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - run: echo "🐤 Hello World"
+        - name: My First Action with input
+          uses: actions/HelloWorld@1
+          with:
+            WhoToGreat: kamran
         - name: Checkout
           uses: actions/checkout@v4.2.2
         - name: List the files in repo
