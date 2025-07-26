@@ -1,0 +1,1 @@
+[![My First Workflow](https://github.com/kamransadiqali/GitHubActionsInAction/actions/workflows/MyFirstWorkflow.yml/badge.svg)](https://github.com/kamransadiqali/GitHubActionsInAction/actions/workflows/MyFirstWorkflow.yml)
