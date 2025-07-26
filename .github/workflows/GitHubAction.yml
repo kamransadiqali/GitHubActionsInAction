@@ -1,63 +1,18 @@
-name: GitHub Actions Workflow
-run-name: Pipeline run by @${{ github.actor }}
+name: Simple Go Build
+ 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-   inputs:
-     homedrive:
-       description: 'The home drive on the machine'
-       required: true
-     logLevel:
-       description: 'Log level'
-       default: 'warning' 
-       type: choice
-       options:
-       - info
-       - warning
-       - debug 
-     tag:
-      description: 'Apply tag after successfull test run'
-      required: true 
-      type: boolean 
-     environment:
-       description: 'Environment to run tests against'
-       type: environment
-       required: true
-
+ 
 jobs:
-    generate-a-secret-output:
-       runs-on: ubuntu-latest
-       steps:
-         - id: sets-a-secret
-           name: Generate, mask, and output a secret
-           run: |
-             the_secret=$((RANDOM))
-             echo "::add-mask::$the_secret"
-             echo "secret-number=$the_secret" >> "$GITHUB_OUTPUT"
-         - name: Use that secret output (protected by a mask)
-           run: |
-             echo "the secret number is ${{ steps.sets-a-secret.outputs.secret-number }}"
-        
-  
-
-#jobs:
-    MyFirstJob:
-      runs-on: ubuntu-latest
-      steps:
-        - run: echo "🐤 Hello World"
-        - run: echo '### Hello world! :rocket:' >> $GITHUB_STEP_SUMMARY
-        - run: echo '### Love this feature! :medal_sports:' >> $GITHUB_STEP_SUMMARY
-        - run: echo '<h1>Great feature!</h1>' >> $GITHUB_STEP_SUMMARY
-        #- name: My First Action with input
-        #  uses: actions/HelloWorld@1
-        #  with:
-        #    WhoToGreat: kamran
-        - name: Checkout
-          uses: actions/checkout@v4.2.2
-        - name: List the files in repo
-          run: |
-            echo "The repo ${{ github.repository }} contains the following files:"
-            tree
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup Go version
+      uses: actions/setup-go@v2
+      with:
+        go-version: '1.15.1'
+    - run: go run helloworld.go   
  
